@@ -1360,6 +1360,15 @@ public:
         this->setLastPt(p.fX, p.fY);
     }
 
+    /** Sets the point at index to (x, y). Valid range for index is
+        0 to countPoints() - 1. Does nothing if index is invalid.
+
+        @param index  SkPoint array element selector
+        @param x  set x-axis value of the point at index
+        @param y  set y-axis value of the point at index
+    */
+    void setPt(int index, SkScalar x, SkScalar y);
+
     /** \enum SkPath::SegmentMask
         SegmentMask constants correspond to each drawing Verb type in SkPath; for
         instance, if SkPath only contains lines, only the kLine_SegmentMask bit is set.
@@ -1394,6 +1403,15 @@ public:
         kClose_Verb, //!< closes contour
         kDone_Verb,  //!< terminates SkPath
     };
+
+    /** Returns Verb at index. Valid range for index is
+        0 to countVerbs() - 1.
+        Returns kDone_Verb if index is out of range.
+
+        @param index  Verb element selector
+        @return       Verb at index or kDone_Verb
+    */
+    Verb getVerb(int index) const;
 
     /** \class SkPath::Iter
         Iterates through verb array, and associated SkPoint array and conic weight.
@@ -1738,8 +1756,6 @@ private:
 
         ed.setBounds(rect);
     }
-
-    void setPt(int index, SkScalar x, SkScalar y);
 
     // Bottlenecks for working with fConvexity and fFirstDirection.
     // Notice the setters are const... these are mutable atomic fields.
