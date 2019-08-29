@@ -152,16 +152,14 @@ int DWriteFontTypeface::onGetVariationDesignPosition(
 
     SkAutoSTMalloc<8, DWRITE_FONT_AXIS_VALUE> fontAxisValue(fontAxisCount);
     HR_GENERAL(fontFace5->GetFontAxisValues(fontAxisValue.get(), fontAxisCount), nullptr, -1);
-    UINT32 coordIndex = 0;
+
     for (UINT32 axisIndex = 0; axisIndex < fontAxisCount; ++axisIndex) {
         if (fontResource->GetFontAxisAttributes(axisIndex) & DWRITE_FONT_AXIS_ATTRIBUTES_VARIABLE) {
-            coordinates[coordIndex].axis = SkEndian_SwapBE32(fontAxisValue[axisIndex].axisTag);
-            coordinates[coordIndex].value = fontAxisValue[axisIndex].value;
-            ++coordIndex;
+            coordinates[axisIndex].axis = SkEndian_SwapBE32(fontAxisValue[axisIndex].axisTag);
+            coordinates[axisIndex].value = fontAxisValue[axisIndex].value;
         }
     }
 
-    SkASSERT(coordIndex == variableAxisCount);
     return SkTo<int>(variableAxisCount);
 
 #endif
@@ -231,19 +229,18 @@ int DWriteFontTypeface::onGetVariationDesignParameters(
     SkAutoSTMalloc<8, DWRITE_FONT_AXIS_VALUE> fontAxisDefaultValue(fontAxisCount);
     HR_GENERAL(fontResource->GetDefaultFontAxisValues(fontAxisDefaultValue.get(), fontAxisCount),
                nullptr, -1);
-    UINT32 coordIndex = 0;
 
     for (UINT32 axisIndex = 0; axisIndex < fontAxisCount; ++axisIndex) {
         if (fontResource->GetFontAxisAttributes(axisIndex) & DWRITE_FONT_AXIS_ATTRIBUTES_VARIABLE) {
-            parameters[coordIndex].tag = SkEndian_SwapBE32(fontAxisDefaultValue[axisIndex].axisTag);
-            parameters[coordIndex].min = fontAxisRange[axisIndex].minValue;
-            parameters[coordIndex].def = fontAxisDefaultValue[axisIndex].value;
-            parameters[coordIndex].max = fontAxisRange[axisIndex].maxValue;
-            parameters[coordIndex].setHidden(fontResource->GetFontAxisAttributes(axisIndex) &
+            parameters[axisIndex].tag = SkEndian_SwapBE32(fontAxisDefaultValue[axisIndex].axisTag);
+            parameters[axisIndex].min = fontAxisRange[axisIndex].minValue;
+            parameters[axisIndex].def = fontAxisDefaultValue[axisIndex].value;
+            parameters[axisIndex].max = fontAxisRange[axisIndex].maxValue;
+            parameters[axisIndex].setHidden(fontResource->GetFontAxisAttributes(axisIndex) &
                                              DWRITE_FONT_AXIS_ATTRIBUTES_HIDDEN);
 
             IDWriteLocalizedStrings* axisNames = nullptr;
-            fontResource->GetAxisNames(0, &axisNames);
+            fontResource->GetAxisNames(axisIndex, &axisNames);
             if (axisNames && axisNames->GetCount() > 0) {
                 auto index = getLocaleIndex(axisNames);
                 UINT32 len;
@@ -253,7 +250,7 @@ int DWriteFontTypeface::onGetVariationDesignParameters(
                 SkString name;
                 sk_wchar_to_skstring(wchars, len, &name);
 				delete[] wchars;
-                parameters[coordIndex].name = name;
+                parameters[axisIndex].name = name;
             }
         }
     }
