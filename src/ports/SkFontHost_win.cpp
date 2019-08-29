@@ -278,7 +278,7 @@ protected:
     SkScalerContext* onCreateScalerContext(const SkScalerContextEffects&,
                                            const SkDescriptor*) const override;
     void onFilterRec(SkScalerContextRec*) const override;
-    void getGlyphToUnicodeMap(SkUnichar*) const override;
+    void onGetGlyphToUnicodeMap(SkUnichar*) const override;
     std::unique_ptr<SkAdvancedTypefaceMetrics> onGetAdvancedMetrics() const override;
     void onGetFontDescriptor(SkFontDescriptor*, bool*) const override;
     void onCharsToGlyphs(const SkUnichar* chars, int count, SkGlyphID glyphs[]) const override;
@@ -1569,7 +1569,7 @@ void LogFontTypeface::onGetFontDescriptor(SkFontDescriptor* desc,
     *isLocalStream = this->fSerializeAsStream;
 }
 
-void LogFontTypeface::getGlyphToUnicodeMap(SkUnichar* dstArray) const {
+void LogFontTypeface::onGetGlyphToUnicodeMap(SkUnichar* dstArray) const {
     SkAutoHDC hdc(fLogFont);
     unsigned int glyphCount = calculateGlyphCount(hdc, fLogFont);
     populate_glyph_to_unicode(hdc, glyphCount, dstArray);

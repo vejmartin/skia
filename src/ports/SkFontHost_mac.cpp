@@ -732,7 +732,7 @@ protected:
                                            const SkDescriptor*) const override;
     void onFilterRec(SkScalerContextRec*) const override;
     void onGetFontDescriptor(SkFontDescriptor*, bool*) const override;
-    void getGlyphToUnicodeMap(SkUnichar*) const override;
+    void onGetGlyphToUnicodeMap(SkUnichar*) const override;
     std::unique_ptr<SkAdvancedTypefaceMetrics> onGetAdvancedMetrics() const override;
     void onCharsToGlyphs(const SkUnichar* chars, int count, SkGlyphID glyphs[]) const override;
     int onCountGlyphs() const override;
@@ -1715,7 +1715,7 @@ static void CFStringToSkString(CFStringRef src, SkString* dst) {
     dst->resize(strlen(dst->c_str()));
 }
 
-void SkTypeface_Mac::getGlyphToUnicodeMap(SkUnichar* dstArray) const {
+void SkTypeface_Mac::onGetGlyphToUnicodeMap(SkUnichar* dstArray) const {
     SkUniqueCFRef<CTFontRef> ctFont =
             ctfont_create_exact_copy(fFontRef.get(), CTFontGetUnitsPerEm(fFontRef.get()), nullptr);
     CFIndex glyphCount = CTFontGetGlyphCount(ctFont.get());

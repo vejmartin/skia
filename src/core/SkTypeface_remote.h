@@ -106,7 +106,7 @@ protected:
     void onGetFontDescriptor(SkFontDescriptor*, bool*) const override {
         SK_ABORT("Should never be called.");
     }
-    void getGlyphToUnicodeMap(SkUnichar*) const override {
+    void onGetGlyphToUnicodeMap(SkUnichar*) const override {
         SK_ABORT("Should never be called.");
     }
 

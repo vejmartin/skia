@@ -130,7 +130,7 @@ void TestSVGTypeface::onFilterRec(SkScalerContextRec* rec) const {
     rec->setHinting(SkFontHinting::kNone);
 }
 
-void TestSVGTypeface::getGlyphToUnicodeMap(SkUnichar* glyphToUnicode) const {
+void TestSVGTypeface::onGetGlyphToUnicodeMap(SkUnichar* glyphToUnicode) const {
     SkDEBUGCODE(unsigned glyphCount = this->countGlyphs());
     fCMap.foreach ([=](const SkUnichar& c, const SkGlyphID& g) {
         SkASSERT(g < glyphCount);

@@ -113,7 +113,7 @@ void TestTypeface::onFilterRec(SkScalerContextRec* rec) const {
     rec->setHinting(SkFontHinting::kNone);
 }
 
-void TestTypeface::getGlyphToUnicodeMap(SkUnichar* glyphToUnicode) const {
+void TestTypeface::onGetGlyphToUnicodeMap(SkUnichar* glyphToUnicode) const {
     unsigned glyphCount = fTestFont->fCharCodesCount;
     for (unsigned gid = 0; gid < glyphCount; ++gid) {
         glyphToUnicode[gid] = SkTo<SkUnichar>(fTestFont->fCharCodes[gid]);

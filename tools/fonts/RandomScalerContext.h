@@ -27,7 +27,7 @@ protected:
     SkScalerContext*                           onCreateScalerContext(const SkScalerContextEffects&,
                                                                      const SkDescriptor*) const override;
     void                                       onFilterRec(SkScalerContextRec*) const override;
-    void                                       getGlyphToUnicodeMap(SkUnichar*) const override;
+    void                                       onGetGlyphToUnicodeMap(SkUnichar*) const override;
     std::unique_ptr<SkAdvancedTypefaceMetrics> onGetAdvancedMetrics() const override;
     std::unique_ptr<SkStreamAsset>             onOpenStream(int* ttcIndex) const override;
     sk_sp<SkTypeface> onMakeClone(const SkFontArguments& args) const override;

@@ -198,6 +198,13 @@ public:
      */
     int countGlyphs() const;
 
+    /** Copy into unichars[] (allocated by the caller) the mapping from glyph to Unicode.
+     *  Array indices are glyph ids.
+     *  For each glyph, give the default Unicode value, if it exists.
+     *  unichars is non-null, and points to an array of size this->countGlyphs().
+     */
+    void getGlyphToUnicodeMap(SkUnichar unichars[]) const;
+
     // Table getters -- may fail if the underlying font format is not organized
     // as 4-byte tables.
 
@@ -376,7 +383,7 @@ protected:
     // The mapping from glyph to Unicode; array indices are glyph ids.
     // For each glyph, give the default Unicode value, if it exists.
     // dstArray is non-null, and points to an array of size this->countGlyphs().
-    virtual void getGlyphToUnicodeMap(SkUnichar* dstArray) const = 0;
+    virtual void onGetGlyphToUnicodeMap(SkUnichar* dstArray) const = 0;
 
     virtual std::unique_ptr<SkStreamAsset> onOpenStream(int* ttcIndex) const = 0;
     // TODO: make pure virtual.

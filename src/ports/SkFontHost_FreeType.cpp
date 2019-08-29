@@ -663,7 +663,7 @@ std::unique_ptr<SkAdvancedTypefaceMetrics> SkTypeface_FreeType::onGetAdvancedMet
     return info;
 }
 
-void SkTypeface_FreeType::getGlyphToUnicodeMap(SkUnichar* dstArray) const {
+void SkTypeface_FreeType::onGetGlyphToUnicodeMap(SkUnichar* dstArray) const {
     SkASSERT(dstArray);
     AutoFTAccess fta(this);
     FT_Face face = fta.face();

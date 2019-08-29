@@ -62,7 +62,7 @@ protected:
     }
     int onCountGlyphs() const override { return 0; }
     void getPostScriptGlyphNames(SkString*) const override {}
-    void getGlyphToUnicodeMap(SkUnichar*) const override {}
+    void onGetGlyphToUnicodeMap(SkUnichar*) const override {}
     int onGetUPEM() const override { return 0; }
     class EmptyLocalizedStrings : public SkTypeface::LocalizedStrings {
     public:
@@ -310,6 +310,10 @@ int SkTypeface::countGlyphs() const {
     return this->onCountGlyphs();
 }
 
+void SkTypeface::getGlyphToUnicodeMap(SkUnichar unichars[]) const{
+    this->onGetGlyphToUnicodeMap(unichars);
+}
+
 int SkTypeface::getUnitsPerEm() const {
     // should we try to cache this in the base-class?
     return this->onGetUPEM();
@@ -338,7 +342,7 @@ void SkTypeface::getFamilyName(SkString* name) const {
     this->onGetFamilyName(name);
 }
 
-void SkTypeface::getGlyphToUnicodeMap(SkUnichar* dst) const {
+void SkTypeface::onGetGlyphToUnicodeMap(SkUnichar* dst) const {
     sk_bzero(dst, sizeof(SkUnichar) * this->countGlyphs());
 }
 

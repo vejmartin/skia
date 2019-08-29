@@ -424,7 +424,7 @@ void DWriteFontTypeface::onFilterRec(SkScalerContextRec* rec) const {
 ///////////////////////////////////////////////////////////////////////////////
 //PDF Support
 
-void DWriteFontTypeface::getGlyphToUnicodeMap(SkUnichar* glyphToUnicode) const {
+void DWriteFontTypeface::onGetGlyphToUnicodeMap(SkUnichar* glyphToUnicode) const {
     unsigned glyphCount = fDWriteFontFace->GetGlyphCount();
     sk_bzero(glyphToUnicode, sizeof(SkUnichar) * glyphCount);
     IDWriteFontFace* fontFace = fDWriteFontFace.get();
